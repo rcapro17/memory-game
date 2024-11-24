@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Top Scores</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="static/css/scores.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="navbar-main">
+        <a href="#">Sobre o Jogo</a>
+        <a href="/">Go Back to Theme</a>
+      </div>
+      <h1 class="my-4 text-center">Top 10 Scores</h1>
+      <div id="scores-container" class="d-flex flex-wrap">
+        <!-- Tables for each theme will be generated here -->
+      </div>
+    </div>
+
+    <script>
+      const themes = ['Elementos', 'Estados', 'Países', 'Relevos'];
+
+      themes.forEach((theme) => {
+        fetch(`/get_rankings?theme=${theme}`)
+          .then((response) => response.json())
+          .then((data) => {
+            const tableContainer = document.createElement('div');
+            tableContainer.classList.add('col-md-6', 'mb-4');
+
+            const tableHTML = `
+              <h2>${theme}</h2>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${
+                    data.length === 0
+                      ? '<tr><td colspan="3">No records yet</td></tr>'
+                      : ''
+                  }
+                  ${data
+                    .map(
+                      (score, index) => `
+                        <tr>
+                          <td>${index + 1}</td>
+                          <td>${score[0]}</td>
+                          <td>${score[1]}</td>
+                        </tr>
+                      `
+                    )
+                    .join('')}
+                </tbody>
+              </table>
+            `;
+
+            tableContainer.innerHTML = tableHTML;
+            document
+              .getElementById('scores-container')
+              .appendChild(tableContainer);
+          })
+          .catch((error) => {
+            console.error('Error fetching scores:', error);
+          });
+      });
+    </script>
+  </body>
+</html>

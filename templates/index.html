@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory Game - Select Theme</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/theme.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      /* Additional styles for the modal */
+      .modal-dialog {
+        max-width: 90%;
+        margin: auto;
+      }
+      .modal-content {
+        padding: 1rem;
+        border-radius: 0.5rem;
+      }
+      .modal-backdrop.show {
+        opacity: 0.9;
+        background-color: black;
+      }
+      .table-container {
+        max-height: 80%;
+        overflow-y: auto;
+      }
+      .fixed-table {
+        table-layout: fixed;
+        width: 100%;
+        margin: 0.5rem;
+      }
+      .fixed-table tbody tr {
+        height: 50px; /* Adjust row height as needed */
+      }
+      .table-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+      }
+      .table-wrapper .table-container {
+        flex: 0 0 48%;
+        margin-bottom: 1rem;
+      }
+      .modal-title {
+        text-align: center;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-container-pricipal">
+      <div class="navbar-main">
+        <div>
+          <a href="#">Sobre o Jogo</a>
+        </div>
+        <div class="scoreboard-menu">
+          <a href="#" onclick="showScoresModal()">Scores</a>
+        </div>
+      </div>
+    </div>
+    <div class="main-container">
+      <div id="main-title">
+        <h1>Jogos Educacionais</h1>
+      </div>
+      <h1>Selecione Tema:</h1>
+     
+      <div class="container" id="nivel-4">
+        <div class="theme-card" onclick="selectTheme('Elementos')">
+          <img src="static/images/icones/elementos.png" alt="Elementos" class="theme-image"/>
+          <span class="theme-title">Elementos Químicos</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Estados')">
+          <img src="static/images/icones/estados.png" alt="Estados" class="theme-image"/>
+          <span class="theme-title">Estados do Brasil</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Países')">
+          <img src="static/images/icones/paises.png" alt="Países" class="theme-image"/>
+          <span class="theme-title">Países do Mundo</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Relevos')">
+          <img src="static/images/icones/relevos.png" alt="Relevos" class="theme-image"/>
+          <span class="theme-title">Relevos do Mundo</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Rios')">
+          <img src="static/images/icones/relevos.png" alt="Relevos" class="theme-image"/>
+          <span class="theme-title">Rios do Mundo</span>
+        </div>
+
+        <div class="theme-card" onclick="selectTheme('Elementos')">
+          <img src="static/images/icones/elementos.png" alt="Elementos" class="theme-image"/>
+          <span class="theme-title">Elementos</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Estados')">
+          <img src="static/images/icones/estados.png" alt="Estados" class="theme-image"/>
+          <span class="theme-title">Estados</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Países')">
+          <img src="static/images/icones/paises.png" alt="Países" class="theme-image"/>
+          <span class="theme-title">Países</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Relevos')">
+          <img src="static/images/icones/relevos.png" alt="Relevos" class="theme-image"/>
+          <span class="theme-title">Relevos</span>
+        </div>
+
+        <div class="theme-card" onclick="selectTheme('Elementos')">
+          <img src="static/images/icones/elementos.png" alt="Elementos" class="theme-image"/>
+          <span class="theme-title">Elementos</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Estados')">
+          <img src="static/images/icones/estados.png" alt="Estados" class="theme-image"/>
+          <span class="theme-title">Estados</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Países')">
+          <img src="static/images/icones/paises.png" alt="Países" class="theme-image"/>
+          <span class="theme-title">Países</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Relevos')">
+          <img src="static/images/icones/relevos.png" alt="Relevos" class="theme-image"/>
+          <span class="theme-title">Relevos</span>
+        </div>
+
+        <div class="theme-card" onclick="selectTheme('Elementos')">
+          <img src="static/images/icones/elementos.png" alt="Elementos" class="theme-image"/>
+          <span class="theme-title">Elementos</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Estados')">
+          <img src="static/images/icones/estados.png" alt="Estados" class="theme-image"/>
+          <span class="theme-title">Estados</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Países')">
+          <img src="static/images/icones/paises.png" alt="Países" class="theme-image"/>
+          <span class="theme-title">Países</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Relevos')">
+          <img src="static/images/icones/relevos.png" alt="Relevos" class="theme-image"/>
+          <span class="theme-title">Relevos</span>
+        </div>
+
+        <div class="theme-card" onclick="selectTheme('Elementos')">
+          <img src="static/images/icones/elementos.png" alt="Elementos" class="theme-image"/>
+          <span class="theme-title">Elementos</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Estados')">
+          <img src="static/images/icones/estados.png" alt="Estados" class="theme-image"/>
+          <span class="theme-title">Estados</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Países')">
+          <img src="static/images/icones/paises.png" alt="Países" class="theme-image"/>
+          <span class="theme-title">Países</span>
+        </div>
+        <div class="theme-card" onclick="selectTheme('Relevos')">
+          <img src="static/images/icones/relevos.png" alt="Relevos" class="theme-image"/>
+          <span class="theme-title">Relevos</span>
+        </div>
+
+        
+      </div>
+      </div>
+    </div>
+    <!-- Player Name Modal -->
+    <div
+      class="modal fade"
+      id="playerNameModal"
+      tabindex="-1"
+      aria-labelledby="playerNameModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="playerNameModalLabel">
+              Enter Player Name
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="playerNameForm">
+              <div class="form-group">
+                <label for="playerNameInput">Player Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="playerNameInput"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Start Game</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Score Modal -->
+    <div
+      class="modal fade"
+      id="scoreModal"
+      tabindex="-1"
+      aria-labelledby="scoreModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="scoreModalLabel">Scores</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="table-wrapper" id="scores-container">
+              <!-- Tables for each theme will be generated here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      function selectTheme(theme) {
+        sessionStorage.setItem('theme', theme);
+        $('#playerNameModal').modal('show');
+      }
+
+      document
+        .getElementById('playerNameForm')
+        .addEventListener('submit', function (event) {
+          event.preventDefault();
+          const playerName = document.getElementById('playerNameInput').value;
+          sessionStorage.setItem('playerName', playerName);
+          $('#playerNameModal').modal('hide');
+          window.location.href = '/game';
+        });
+
+      function showScoresModal() {
+        $('#scoreModal').modal('show');
+        fetchScores();
+      }
+
+      function fetchScores() {
+        const themes = ['Elementos', 'Estados', 'Países', 'Relevos', 'Rios'];
+        const scoresContainer = document.getElementById('scores-container');
+        scoresContainer.innerHTML = ''; // Clear previous scores
+
+        themes.forEach((theme) => {
+          fetch(`/get_rankings?theme=${theme}`)
+            .then((response) => response.json())
+            .then((data) => {
+              const tableContainer = document.createElement('div');
+              tableContainer.classList.add('table-container');
+
+              let tableHTML = `
+              <h2>${theme}</h2>
+              <table class="table table-striped fixed-table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                  </tr>
+                </thead>
+                <tbody>`;
+
+              for (let i = 0; i < 10; i++) {
+                if (i < data.length) {
+                  const score = data[i];
+                  tableHTML += `
+                  <tr>
+                    <td>${i + 1}</td>
+                    <td>${score[0]}</td>
+                    <td>${score[1]}</td>
+                  </tr>`;
+                } else {
+                  tableHTML += `
+                  <tr>
+                    <td>${i + 1}</td>
+                    <td>-</td>
+                    <td>-</td>
+                  </tr>`;
+                }
+              }
+
+              tableHTML += `</tbody></table>`;
+              tableContainer.innerHTML = tableHTML;
+              scoresContainer.appendChild(tableContainer);
+            })
+            .catch((error) => {
+              console.error('Error fetching scores:', error);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>

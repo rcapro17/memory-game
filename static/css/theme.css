@@ -1,0 +1,170 @@
+/* theme.css */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  height: 100vh;
+  margin: 0;
+}
+.main-container-principal {
+  display: flex;
+  margin-left: 50px;
+  gap: 5px;
+}
+.logo {
+  width: 50px;
+  height: auto;
+}
+
+.navbar-main {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100px;
+  background-color: #0056b3;
+  align-items: center;
+  text-align: center;
+  gap: 50px;
+  padding: 50px;
+}
+.navbar-main a {
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: auto;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  gap: 50px;
+}
+#main-title {
+  display: flex;
+  background-color: #0056b3;
+  color: white;
+  border-radius: 5px;
+  align-items: center;
+  width: 300px;
+  height: 100px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.container-theme-1 {
+  display: flex;
+  gap: 30px;
+}
+.container-theme-2 {
+  display: flex;
+  gap: 30px;
+}
+
+#nivel-4 {
+  border-radius: 5px;
+  background-color: #0056b3;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  width: 120px;
+  height: 80px;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+#scores-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#scores-container .col-md-6 {
+  flex: 0 0 48%;
+  max-width: 48%;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+h2 {
+  margin-bottom: 10px;
+  color: #0056b3;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+.container {
+  display: flex;
+  gap: 30px;
+  height: 400px;
+  overflow-x: scroll; /* Enable horizontal scrolling */
+  padding: 20px;
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
+.container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in WebKit browsers */
+}
+
+.theme-card {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  width: 195px; /* 30% bigger than original 150px */
+  text-align: justify;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 10px;
+  flex-shrink: 0; /* Ensure cards are not affected by image sizes */
+}
+
+.theme-card:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+.theme-image {
+  width: 100%;
+  height: auto; /* Adjusted to match card size increase */
+  object-fit: cover; /* Ensure images fit within the adjusted card size */
+  border-radius: 8px;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.theme-card:hover .theme-image {
+  opacity: 0.8;
+}
+
+.theme-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #0056b3;
+  text-transform: capitalize;
+}
