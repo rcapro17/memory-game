@@ -9,6 +9,7 @@ body {
   height: 100vh;
   margin: 0;
 }
+
 .top-text {
   display: flex;
   justify-content: center;
@@ -26,16 +27,15 @@ body {
 
 #game-container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: #fff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
   width: 90%;
   max-width: 1000px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
 }
 
 #cards {
@@ -82,7 +82,6 @@ button:hover {
   margin: 20px 0;
 }
 
-/* Add flexbox layout for the buttons */
 #button-container {
   display: flex;
   gap: 20px;
@@ -90,7 +89,6 @@ button:hover {
   margin-top: 20px;
 }
 
-/* Responsive adjustments */
 @media (max-width: 800px) {
   #cards {
     grid-template-columns: repeat(3, 1fr);
@@ -115,51 +113,11 @@ button:hover {
 
 @media (max-width: 400px) {
   #cards {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(1, 1fr);
   }
 
   .card {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
   }
-}
-
-/* game.css */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  align-items: center;
-  text-align: center;
-}
-
-/* The Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
 }

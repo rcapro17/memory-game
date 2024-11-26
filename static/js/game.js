@@ -7,19 +7,31 @@ let matchedPairs = 0;
 let cards = [];
 const gameDuration = 100; // Game duration in seconds
 
+// Dictionary of hints based on the theme
+const hints = {
+  Elementos: 'Dica: Lembre-se dos símbolos químicos!',
+  Estados: 'Dica: Pense nas capitais dos Estados!',
+  Países: 'Dica: Memorize os Países e suas capitais!',
+  Relevos: 'Dica: Veja os relevos e suas características!',
+  Rios: 'Dica: Lembre-se dos rios famosos!',
+  // Add more themes and hints here
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   loadRankings(selectedTheme);
+  updateHint(selectedTheme); // Update hint when the page loads
   renderCards();
 });
 
-function startGame() {
+const startGame = () => {
+  $('#hintModal').modal('hide');
   if (!selectedTheme || !playerName) return;
   startTime = Date.now();
   matchedPairs = 0;
   cards = generateCards(selectedTheme);
   renderCards();
   startTimer();
-}
+};
 
 function pauseGame() {
   clearInterval(timerInterval);
@@ -108,7 +120,6 @@ function endGame(win) {
     postScore(playerName, selectedTheme, elapsedSeconds);
   } else {
     showScoreModal('Sorry! Game is Over!');
-    alert('Game over! Better luck next time.');
   }
 }
 
@@ -132,6 +143,10 @@ function postScore(playerName, theme, score) {
     });
 }
 
+const showHintModal = () => {
+  $('#hintModal').modal('show');
+};
+
 function loadRankings(theme) {
   fetch(`/get_rankings?theme=${theme}`)
     .then((response) => response.json())
@@ -145,6 +160,12 @@ function loadRankings(theme) {
         row.insertCell(2).innerText = rank.time;
       });
     });
+}
+
+// Function to update the hint based on the selected theme
+function updateHint(theme) {
+  const hintElement = document.querySelector('h1:nth-of-type(2)');
+  hintElement.textContent = hints[theme] || 'Hint will be shown here!';
 }
 
 document.addEventListener('DOMContentLoaded', startGame);

@@ -12,10 +12,16 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
     <style>
       /* Additional styles for the modal */
       .modal-dialog {
-        max-width: 90%;
+        max-width: 50%; /* Set the modal width to 50% */
         margin: auto;
       }
       .modal-content {
@@ -29,14 +35,6 @@
       .table-container {
         max-height: 80%;
         overflow-y: auto;
-      }
-      .fixed-table {
-        table-layout: fixed;
-        width: 100%;
-        margin: 0.5rem;
-      }
-      .fixed-table tbody tr {
-        height: 50px; /* Adjust row height as needed */
       }
       .table-wrapper {
         display: flex;
@@ -69,101 +67,57 @@
         <h1>Jogos Educacionais</h1>
       </div>
       <h1>Selecione Tema:</h1>
-     
+
       <div class="container" id="nivel-4">
         <div class="theme-card" onclick="selectTheme('Elementos')">
-          <img src="static/images/icones/elementos.png" alt="Elementos" class="theme-image"/>
+          <img
+            src="static/images/icones/elementos.png"
+            alt="Elementos"
+            class="theme-image"
+          />
           <span class="theme-title">Elementos Químicos</span>
         </div>
         <div class="theme-card" onclick="selectTheme('Estados')">
-          <img src="static/images/icones/estados.png" alt="Estados" class="theme-image"/>
+          <img
+            src="static/images/icones/estados.png"
+            alt="Estados"
+            class="theme-image"
+          />
           <span class="theme-title">Estados do Brasil</span>
         </div>
         <div class="theme-card" onclick="selectTheme('Países')">
-          <img src="static/images/icones/paises.png" alt="Países" class="theme-image"/>
+          <img
+            src="static/images/icones/paises.png"
+            alt="Países"
+            class="theme-image"
+          />
           <span class="theme-title">Países do Mundo</span>
         </div>
         <div class="theme-card" onclick="selectTheme('Relevos')">
-          <img src="static/images/icones/relevos.png" alt="Relevos" class="theme-image"/>
+          <img
+            src="static/images/icones/relevos.png"
+            alt="Relevos"
+            class="theme-image"
+          />
           <span class="theme-title">Relevos do Mundo</span>
         </div>
         <div class="theme-card" onclick="selectTheme('Rios')">
-          <img src="static/images/icones/relevos.png" alt="Relevos" class="theme-image"/>
+          <img
+            src="static/images/icones/relevos.png"
+            alt="Relevos"
+            class="theme-image"
+          />
           <span class="theme-title">Rios do Mundo</span>
         </div>
-
-        <div class="theme-card" onclick="selectTheme('Elementos')">
-          <img src="static/images/icones/elementos.png" alt="Elementos" class="theme-image"/>
-          <span class="theme-title">Elementos</span>
-        </div>
-        <div class="theme-card" onclick="selectTheme('Estados')">
-          <img src="static/images/icones/estados.png" alt="Estados" class="theme-image"/>
-          <span class="theme-title">Estados</span>
-        </div>
-        <div class="theme-card" onclick="selectTheme('Países')">
-          <img src="static/images/icones/paises.png" alt="Países" class="theme-image"/>
-          <span class="theme-title">Países</span>
-        </div>
-        <div class="theme-card" onclick="selectTheme('Relevos')">
-          <img src="static/images/icones/relevos.png" alt="Relevos" class="theme-image"/>
-          <span class="theme-title">Relevos</span>
-        </div>
-
-        <div class="theme-card" onclick="selectTheme('Elementos')">
-          <img src="static/images/icones/elementos.png" alt="Elementos" class="theme-image"/>
-          <span class="theme-title">Elementos</span>
-        </div>
-        <div class="theme-card" onclick="selectTheme('Estados')">
-          <img src="static/images/icones/estados.png" alt="Estados" class="theme-image"/>
-          <span class="theme-title">Estados</span>
-        </div>
-        <div class="theme-card" onclick="selectTheme('Países')">
-          <img src="static/images/icones/paises.png" alt="Países" class="theme-image"/>
-          <span class="theme-title">Países</span>
-        </div>
-        <div class="theme-card" onclick="selectTheme('Relevos')">
-          <img src="static/images/icones/relevos.png" alt="Relevos" class="theme-image"/>
-          <span class="theme-title">Relevos</span>
-        </div>
-
-        <div class="theme-card" onclick="selectTheme('Elementos')">
-          <img src="static/images/icones/elementos.png" alt="Elementos" class="theme-image"/>
-          <span class="theme-title">Elementos</span>
-        </div>
-        <div class="theme-card" onclick="selectTheme('Estados')">
-          <img src="static/images/icones/estados.png" alt="Estados" class="theme-image"/>
-          <span class="theme-title">Estados</span>
-        </div>
-        <div class="theme-card" onclick="selectTheme('Países')">
-          <img src="static/images/icones/paises.png" alt="Países" class="theme-image"/>
-          <span class="theme-title">Países</span>
-        </div>
-        <div class="theme-card" onclick="selectTheme('Relevos')">
-          <img src="static/images/icones/relevos.png" alt="Relevos" class="theme-image"/>
-          <span class="theme-title">Relevos</span>
-        </div>
-
-        <div class="theme-card" onclick="selectTheme('Elementos')">
-          <img src="static/images/icones/elementos.png" alt="Elementos" class="theme-image"/>
-          <span class="theme-title">Elementos</span>
-        </div>
-        <div class="theme-card" onclick="selectTheme('Estados')">
-          <img src="static/images/icones/estados.png" alt="Estados" class="theme-image"/>
-          <span class="theme-title">Estados</span>
-        </div>
-        <div class="theme-card" onclick="selectTheme('Países')">
-          <img src="static/images/icones/paises.png" alt="Países" class="theme-image"/>
-          <span class="theme-title">Países</span>
-        </div>
-        <div class="theme-card" onclick="selectTheme('Relevos')">
-          <img src="static/images/icones/relevos.png" alt="Relevos" class="theme-image"/>
-          <span class="theme-title">Relevos</span>
-        </div>
-
-        
+        <!-- More theme cards... -->
       </div>
-      </div>
+      <img
+        src="static/images/icones/logo_educacao.png"
+        alt="Logo"
+        class="logo"
+      />
     </div>
+
     <!-- Player Name Modal -->
     <div
       class="modal fade"
@@ -176,7 +130,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="playerNameModalLabel">
-              Enter Player Name
+              Digite o nome do jogador:
             </h5>
             <button
               type="button"
@@ -190,7 +144,7 @@
           <div class="modal-body">
             <form id="playerNameForm">
               <div class="form-group">
-                <label for="playerNameInput">Player Name</label>
+                <label for="playerNameInput">Nome do Jogador</label>
                 <input
                   type="text"
                   class="form-control"
@@ -204,6 +158,40 @@
         </div>
       </div>
     </div>
+
+    <!-- Hint Modal -->
+    <div
+      class="modal fade"
+      id="hintModal"
+      tabindex="-1"
+      aria-labelledby="hintModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="hintModalLabel">Dica do Jogo:</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id="hintText">Here is a hint to help you start the game...</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="startGameButton">
+              Start Game
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Score Modal -->
     <div
       class="modal fade"
@@ -233,10 +221,20 @@
         </div>
       </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
+      // Hint messages for each theme
+      const hints = {
+        Elementos: 'Dica: Lembre-se dos símbolos químicos!',
+        Estados: 'Dica: Pense nas capitais dos Estados!',
+        Países: 'Dica: Memorize os Países e suas capitais!',
+        Relevos: 'Dica: Veja os relevos e suas características!',
+        Rios: 'Dica: Lembre-se dos rios famosos!',
+      };
+
       function selectTheme(theme) {
         sessionStorage.setItem('theme', theme);
         $('#playerNameModal').modal('show');
@@ -247,8 +245,20 @@
         .addEventListener('submit', function (event) {
           event.preventDefault();
           const playerName = document.getElementById('playerNameInput').value;
+          const theme = sessionStorage.getItem('theme');
           sessionStorage.setItem('playerName', playerName);
+
+          // Set the hint text based on the selected theme
+          document.getElementById('hintText').innerText = hints[theme];
+
           $('#playerNameModal').modal('hide');
+          $('#hintModal').modal('show');
+        });
+
+      document
+        .getElementById('startGameButton')
+        .addEventListener('click', function () {
+          $('#hintModal').modal('hide');
           window.location.href = '/game';
         });
 
@@ -271,12 +281,12 @@
 
               let tableHTML = `
               <h2>${theme}</h2>
-              <table class="table table-striped fixed-table">
+              <table class="table table-striped table-bordered">
                 <thead>
                   <tr>
-                    <th>Rank</th>
-                    <th>Player</th>
-                    <th>Score</th>
+                    <th>Posição</th>
+                    <th>Jogador</th>
+                    <th>Tempo</th>
                   </tr>
                 </thead>
                 <tbody>`;
@@ -285,18 +295,18 @@
                 if (i < data.length) {
                   const score = data[i];
                   tableHTML += `
-                  <tr>
-                    <td>${i + 1}</td>
-                    <td>${score[0]}</td>
-                    <td>${score[1]}</td>
-                  </tr>`;
+                    <tr>
+                      <td>${i + 1}</td>
+                      <td>${score[0]}</td>
+                      <td>${score[1]}</td>
+                    </tr>`;
                 } else {
                   tableHTML += `
-                  <tr>
-                    <td>${i + 1}</td>
-                    <td>-</td>
-                    <td>-</td>
-                  </tr>`;
+                    <tr>
+                      <td>${i + 1}</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>`;
                 }
               }
 
