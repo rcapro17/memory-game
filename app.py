@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, jsonify
 import sqlite3
+import os
 
 app = Flask(__name__)
 
 DB_PATH = "database.db"
 
-# Temas oficiais do jogo (mantém consistência no ranking)
+# Temas oficiais do jogo
 ALLOWED_THEMES = [
     "Elementos",
     "Estados",
@@ -22,7 +23,6 @@ def normalize_theme(theme: str) -> str:
 
     theme = theme.strip()
 
-    # Mapeamentos opcionais para aceitar variações do front
     aliases = {
         "Ícones": "Icones",
         "Icones do Brasil": "Icones",
@@ -32,26 +32,32 @@ def normalize_theme(theme: str) -> str:
     }
 
     theme = aliases.get(theme, theme)
-
     return theme
 
-# Initialize the database
+# --- CRIAÇÃO DO BANCO DE DADOS ---
 def init_db():
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
+    """Cria a tabela e índices se eles não existirem."""
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        c = conn.cursor()
 
-    c.execute(
-        """CREATE TABLE IF NOT EXISTS rankings
-           (id INTEGER PRIMARY KEY,
-            name TEXT NOT NULL,
-            theme TEXT NOT NULL,
-            time INTEGER NOT NULL)"""
-    )
+        c.execute(
+            """CREATE TABLE IF NOT EXISTS rankings
+            (id INTEGER PRIMARY KEY,
+                name TEXT NOT NULL,
+                theme TEXT NOT NULL,
+                time INTEGER NOT NULL)"""
+        )
 
-    # Índice ajuda quando tiver muitos scores
-    c.execute("CREATE INDEX IF NOT EXISTS idx_theme_time ON rankings(theme, time)")
-    conn.commit()
-    conn.close()
+        c.execute("CREATE INDEX IF NOT EXISTS idx_theme_time ON rankings(theme, time)")
+        conn.commit()
+        conn.close()
+        print(" Banco de dados inicializado com sucesso.")
+    except Exception as e:
+        print(f" Erro ao inicializar banco de dados: {e}")
+
+# [IMPORTANTE] Chamamos a função aqui para garantir que rode no Gunicorn
+init_db() 
 
 @app.route("/")
 def index():
@@ -67,7 +73,6 @@ def scores():
 
 @app.route("/themes", methods=["GET"])
 def themes():
-    """Front pode chamar isso pra montar o dropdown automaticamente."""
     return jsonify(ALLOWED_THEMES)
 
 @app.route("/start_game", methods=["POST"])
@@ -93,7 +98,6 @@ def save_score():
     theme = normalize_theme(data.get("theme", ""))
     elapsed_time = data.get("score", None)
 
-    # validações básicas
     if not name:
         return jsonify({"error": "playerName is required"}), 400
 
@@ -107,16 +111,18 @@ def save_score():
     except Exception:
         return jsonify({"error": "score must be a non-negative integer (seconds)"}), 400
 
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute(
-        "INSERT INTO rankings (name, theme, time) VALUES (?, ?, ?)",
-        (name, theme, elapsed_time),
-    )
-    conn.commit()
-    conn.close()
-
-    return jsonify({"status": "Score saved"})
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        c = conn.cursor()
+        c.execute(
+            "INSERT INTO rankings (name, theme, time) VALUES (?, ?, ?)",
+            (name, theme, elapsed_time),
+        )
+        conn.commit()
+        conn.close()
+        return jsonify({"status": "Score saved"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/get_rankings", methods=["GET"])
 def get_rankings():
@@ -125,18 +131,21 @@ def get_rankings():
     if theme not in ALLOWED_THEMES:
         return jsonify({"error": "Invalid theme", "allowed": ALLOWED_THEMES}), 400
 
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute(
-        "SELECT name, time FROM rankings WHERE theme = ? ORDER BY time ASC LIMIT 10",
-        (theme,),
-    )
-    rankings = c.fetchall()
-    conn.close()
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        c = conn.cursor()
+        # Limitei a 10 para pegar o Top 10
+        c.execute(
+            "SELECT name, time FROM rankings WHERE theme = ? ORDER BY time ASC LIMIT 10",
+            (theme,),
+        )
+        rankings = c.fetchall()
+        conn.close()
 
-    # opcional: retorna como lista de objetos, mais fácil no front
-    return jsonify([{"name": r[0], "time": r[1]} for r in rankings])
+        return jsonify([{"name": r[0], "time": r[1]} for r in rankings])
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    init_db()
+    # Mantemos aqui para desenvolvimento local (flask run ou python app.py)
     app.run(debug=True)
