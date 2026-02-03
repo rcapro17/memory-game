@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<!-- =========================
+     templates/scores.html
+     ========================= -->
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,8 +9,7 @@
     <title>Top Scores</title>
     <link
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" href="static/css/scores.css" />
   </head>
   <body>
@@ -16,60 +18,69 @@
         <a href="#">Sobre o Jogo</a>
         <a href="/">Retornar ao Menu</a>
       </div>
+
       <h1 class="my-4 text-center">Top 10 Scores</h1>
-      <div id="scores-container" class="d-flex flex-wrap">
-        <!-- Tables for each theme will be generated here -->
-      </div>
+      <div id="scores-container" class="d-flex flex-wrap"></div>
     </div>
 
     <script>
-      const themes = ['Elementos', 'Estados', 'Países', 'Relevos'];
+      // Atualizado: temas válidos + "Digital Devices"
+      const themes = [
+        "Elementos",
+        "Estados",
+        "Icones",
+        "Relevos",
+        "Rios",
+        "Digital Devices",
+      ];
 
       themes.forEach((theme) => {
-        fetch(`/get_rankings?theme=${theme}`)
+        fetch(`/get_rankings?theme=${encodeURIComponent(theme)}`)
           .then((response) => response.json())
           .then((data) => {
-            const tableContainer = document.createElement('div');
-            tableContainer.classList.add('col-md-6', 'mb-4');
+            const tableContainer = document.createElement("div");
+            tableContainer.classList.add("col-md-6", "mb-4");
 
-            const tableHTML = `
+            const getName = (row) => (row?.name ? row.name : row[0]);
+            const getTime = (row) => (row?.time ? row.time : row[1]);
+
+            const rows =
+              !data || data.length === 0
+                ? '<tr><td colspan="3">No records yet</td></tr>'
+                : data
+                    .map(
+                      (score, index) => `
+                        <tr>
+                          <td>${index + 1}</td>
+                          <td>${getName(score)}</td>
+                          <td>${getTime(score)}</td>
+                        </tr>
+                      `,
+                    )
+                    .join("");
+
+            tableContainer.innerHTML = `
               <h2>${theme}</h2>
               <table class="table table-striped">
                 <thead>
                   <tr>
                     <th>Rank</th>
                     <th>Player</th>
-                    <th>Score</th>
+                    <th>Time</th>
                   </tr>
                 </thead>
                 <tbody>
-                  ${
-                    data.length === 0
-                      ? '<tr><td colspan="3">No records yet</td></tr>'
-                      : ''
-                  }
-                  ${data
-                    .map(
-                      (score, index) => `
-                        <tr>
-                          <td>${index + 1}</td>
-                          <td>${score[0]}</td>
-                          <td>${score[1]}</td>
-                        </tr>
-                      `
-                    )
-                    .join('')}
+                  ${rows}
                 </tbody>
               </table>
             `;
 
-            tableContainer.innerHTML = tableHTML;
             document
-              .getElementById('scores-container')
+              .getElementById("scores-container")
               .appendChild(tableContainer);
           })
           .catch((error) => {
-            console.error('Error fetching scores:', error);
+            console.error("Error fetching scores:", error);
           });
       });
     </script>

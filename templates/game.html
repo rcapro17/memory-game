@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,15 +6,13 @@
     <title>Memory Game - Game</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/game.css') }}"
-    />
+      href="{{ url_for('static', filename='css/game.css') }}" />
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
+      crossorigin="anonymous" />
   </head>
   <body>
     <div id="game-container">
@@ -43,8 +41,7 @@
       tabindex="-1"
       role="dialog"
       aria-labelledby="instructionsModalLabel"
-      aria-hidden="true"
-    >
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -55,8 +52,7 @@
               type="button"
               class="close"
               data-dismiss="modal"
-              aria-label="Close"
-            >
+              aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -71,8 +67,7 @@
               type="button"
               class="btn btn-primary"
               onclick="startActualGame()"
-              data-dismiss="modal"
-            >
+              data-dismiss="modal">
               Start
             </button>
           </div>
@@ -87,8 +82,7 @@
       tabindex="-1"
       role="dialog"
       aria-labelledby="scoreModalLabel"
-      aria-hidden="true"
-    >
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -97,8 +91,7 @@
               type="button"
               class="close"
               data-dismiss="modal"
-              aria-label="Close"
-            >
+              aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -111,8 +104,7 @@
             <button
               type="button"
               class="btn btn-primary"
-              onclick="window.location.href='/'"
-            >
+              onclick="window.location.href = '/'">
               Back to Main
             </button>
           </div>
@@ -124,18 +116,15 @@
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
+      crossorigin="anonymous"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
       integrity="sha384-CS/QBqK7FfWQqLGpUqq5QyLheGouBoPqqExxcpnAP7P7VVtB9Qj5pFgtpjEwlfX8"
-      crossorigin="anonymous"
-    ></script>
+      crossorigin="anonymous"></script>
     <script
       src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
+      crossorigin="anonymous"></script>
 
     <!-- Game Script -->
     <script src="{{ url_for('static', filename='js/game.js') }}"></script>

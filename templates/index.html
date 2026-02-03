@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -6,18 +6,15 @@
     <title>Memory Game - Select Theme</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/theme.css') }}"
-    />
+      href="{{ url_for('static', filename='css/theme.css') }}" />
     <link
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
     <style>
       /* Additional styles for the modal */
       .modal-dialog {
@@ -73,40 +70,35 @@
           <img
             src="static/images/icones/elementos.png"
             alt="Elementos"
-            class="theme-image"
-          />
+            class="theme-image" />
           <span class="theme-title">Elementos Químicos</span>
         </div>
         <div class="theme-card" onclick="selectTheme('Estados')">
           <img
             src="static/images/icones/estados.png"
             alt="Estados"
-            class="theme-image"
-          />
+            class="theme-image" />
           <span class="theme-title">Estados do Brasil</span>
         </div>
         <div class="theme-card" onclick="selectTheme('Países')">
           <img
             src="static/images/icones/paises.png"
             alt="Países"
-            class="theme-image"
-          />
+            class="theme-image" />
           <span class="theme-title">Países do Mundo</span>
         </div>
         <div class="theme-card" onclick="selectTheme('Relevos')">
           <img
             src="static/images/icones/relevos.png"
             alt="Relevos"
-            class="theme-image"
-          />
+            class="theme-image" />
           <span class="theme-title">Relevos do Mundo</span>
         </div>
         <div class="theme-card" onclick="selectTheme('Rios')">
           <img
             src="static/images/icones/relevos.png"
             alt="Relevos"
-            class="theme-image"
-          />
+            class="theme-image" />
           <span class="theme-title">Rios do Mundo</span>
         </div>
         <!-- More theme cards... -->
@@ -114,8 +106,7 @@
       <img
         src="static/images/icones/logo_educacao.png"
         alt="Logo"
-        class="logo"
-      />
+        class="logo" />
     </div>
 
     <!-- Player Name Modal -->
@@ -124,8 +115,7 @@
       id="playerNameModal"
       tabindex="-1"
       aria-labelledby="playerNameModalLabel"
-      aria-hidden="true"
-    >
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -136,8 +126,7 @@
               type="button"
               class="close"
               data-dismiss="modal"
-              aria-label="Close"
-            >
+              aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -149,8 +138,7 @@
                   type="text"
                   class="form-control"
                   id="playerNameInput"
-                  required
-                />
+                  required />
               </div>
               <button type="submit" class="btn btn-primary">Start Game</button>
             </form>
@@ -165,8 +153,7 @@
       id="hintModal"
       tabindex="-1"
       aria-labelledby="hintModalLabel"
-      aria-hidden="true"
-    >
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -175,8 +162,7 @@
               type="button"
               class="close"
               data-dismiss="modal"
-              aria-label="Close"
-            >
+              aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -198,8 +184,7 @@
       id="scoreModal"
       tabindex="-1"
       aria-labelledby="scoreModalLabel"
-      aria-hidden="true"
-    >
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -208,8 +193,7 @@
               type="button"
               class="close"
               data-dismiss="modal"
-              aria-label="Close"
-            >
+              aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -228,56 +212,56 @@
     <script>
       // Hint messages for each theme
       const hints = {
-        Elementos: 'Dica: Lembre-se dos símbolos químicos!',
-        Estados: 'Dica: Pense nas capitais dos Estados!',
-        Países: 'Dica: Memorize os Países e suas capitais!',
-        Relevos: 'Dica: Veja os relevos e suas características!',
-        Rios: 'Dica: Lembre-se dos rios famosos!',
+        Elementos: "Dica: Lembre-se dos símbolos químicos!",
+        Estados: "Dica: Pense nas capitais dos Estados!",
+        Países: "Dica: Memorize os Países e suas capitais!",
+        Relevos: "Dica: Veja os relevos e suas características!",
+        Rios: "Dica: Lembre-se dos rios famosos!",
       };
 
       function selectTheme(theme) {
-        sessionStorage.setItem('theme', theme);
-        $('#playerNameModal').modal('show');
+        sessionStorage.setItem("theme", theme);
+        $("#playerNameModal").modal("show");
       }
 
       document
-        .getElementById('playerNameForm')
-        .addEventListener('submit', function (event) {
+        .getElementById("playerNameForm")
+        .addEventListener("submit", function (event) {
           event.preventDefault();
-          const playerName = document.getElementById('playerNameInput').value;
-          const theme = sessionStorage.getItem('theme');
-          sessionStorage.setItem('playerName', playerName);
+          const playerName = document.getElementById("playerNameInput").value;
+          const theme = sessionStorage.getItem("theme");
+          sessionStorage.setItem("playerName", playerName);
 
           // Set the hint text based on the selected theme
-          document.getElementById('hintText').innerText = hints[theme];
+          document.getElementById("hintText").innerText = hints[theme];
 
-          $('#playerNameModal').modal('hide');
-          $('#hintModal').modal('show');
+          $("#playerNameModal").modal("hide");
+          $("#hintModal").modal("show");
         });
 
       document
-        .getElementById('startGameButton')
-        .addEventListener('click', function () {
-          $('#hintModal').modal('hide');
-          window.location.href = '/game';
+        .getElementById("startGameButton")
+        .addEventListener("click", function () {
+          $("#hintModal").modal("hide");
+          window.location.href = "/game";
         });
 
       function showScoresModal() {
-        $('#scoreModal').modal('show');
+        $("#scoreModal").modal("show");
         fetchScores();
       }
 
       function fetchScores() {
-        const themes = ['Elementos', 'Estados', 'Países', 'Relevos', 'Rios'];
-        const scoresContainer = document.getElementById('scores-container');
-        scoresContainer.innerHTML = ''; // Clear previous scores
+        const themes = ["Elementos", "Estados", "Países", "Relevos", "Rios"];
+        const scoresContainer = document.getElementById("scores-container");
+        scoresContainer.innerHTML = ""; // Clear previous scores
 
         themes.forEach((theme) => {
           fetch(`/get_rankings?theme=${theme}`)
             .then((response) => response.json())
             .then((data) => {
-              const tableContainer = document.createElement('div');
-              tableContainer.classList.add('table-container');
+              const tableContainer = document.createElement("div");
+              tableContainer.classList.add("table-container");
 
               let tableHTML = `
               <h2>${theme}</h2>
@@ -315,7 +299,7 @@
               scoresContainer.appendChild(tableContainer);
             })
             .catch((error) => {
-              console.error('Error fetching scores:', error);
+              console.error("Error fetching scores:", error);
             });
         });
       }
