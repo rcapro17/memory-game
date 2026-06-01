@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: memory-game
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DB_PATH
+        value: /tmp/database.db   # ephemeral – see note below
+    # -------------------------------------------------------
+    # SCORES PERSISTENCE (optional – costs ~$0.25/GB/month)
+    # Uncomment the block below and change DB_PATH to /data/database.db
+    # -------------------------------------------------------
+    # disk:
+    #   name: memory-game-db
+    #   mountPath: /data
+    #   sizeGB: 1

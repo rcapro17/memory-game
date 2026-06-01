@@ -15,12 +15,20 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet" />
+
     <style>
-      /* Additional styles for the modal */
+      /* Modal responsivo (iPad Pro 12" e geral) */
       .modal-dialog {
-        max-width: 50%; /* Set the modal width to 50% */
-        margin: auto;
+        max-width: 760px;
+        width: 92vw;
+        margin: 1.25rem auto;
       }
+      @media (min-width: 1024px) {
+        .modal-dialog {
+          max-width: 900px;
+        }
+      }
+
       .modal-content {
         padding: 1rem;
         border-radius: 0.5rem;
@@ -29,40 +37,57 @@
         opacity: 0.9;
         background-color: black;
       }
-      .table-container {
-        max-height: 80%;
-        overflow-y: auto;
-      }
+
       .table-wrapper {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
       }
-      .table-wrapper .table-container {
+      .table-container {
         flex: 0 0 48%;
         margin-bottom: 1rem;
+        max-height: 70vh;
+        overflow-y: auto;
       }
+      @media (max-width: 768px) {
+        .table-container {
+          flex: 0 0 100%;
+        }
+      }
+
       .modal-title {
         text-align: center;
         width: 100%;
       }
+
+      /* feedback rápido ao abrir scores */
+      #scores-loading {
+        display: none;
+        text-align: center;
+        padding: 0.75rem 0;
+      }
     </style>
   </head>
+
   <body>
     <div class="main-container-pricipal">
       <div class="navbar-main">
-        <div>
-          <a href="#">Sobre o Jogo</a>
-        </div>
+        <div><a href="#">Sobre o Jogo</a></div>
         <div class="scoreboard-menu">
-          <a href="#" onclick="showScoresModal()">Scores</a>
+          <a
+            href="#"
+            onclick="
+              showScoresModal();
+              return false;
+            "
+            >Scores</a
+          >
         </div>
       </div>
     </div>
+
     <div class="main-container">
-      <div id="main-title">
-        <h1>Jogos Educacionais</h1>
-      </div>
+      <div id="main-title"><h1>Jogos Educacionais</h1></div>
       <h1>Selecione Tema:</h1>
 
       <div class="container" id="nivel-4">
@@ -73,6 +98,7 @@
             class="theme-image" />
           <span class="theme-title">Elementos Químicos</span>
         </div>
+
         <div class="theme-card" onclick="selectTheme('Estados')">
           <img
             src="static/images/icones/estados.png"
@@ -80,6 +106,7 @@
             class="theme-image" />
           <span class="theme-title">Estados do Brasil</span>
         </div>
+
         <div class="theme-card" onclick="selectTheme('Países')">
           <img
             src="static/images/icones/paises.png"
@@ -87,22 +114,33 @@
             class="theme-image" />
           <span class="theme-title">Países do Mundo</span>
         </div>
-        <div class="theme-card" onclick="selectTheme('Relevos')">
+
+        <!-- TROCA AQUI: Relevos -> Digital Devices -->
+        <div class="theme-card" onclick="selectTheme('Digital Devices')">
           <img
-            src="static/images/icones/relevos.png"
-            alt="Relevos"
+            src="static/images/icones/digital.png"
+            alt="Digital Devices"
             class="theme-image" />
-          <span class="theme-title">Relevos do Mundo</span>
+          <span class="theme-title">Digital Devices</span>
         </div>
+
         <div class="theme-card" onclick="selectTheme('Rios')">
           <img
             src="static/images/icones/relevos.png"
-            alt="Relevos"
+            alt="Rios"
             class="theme-image" />
           <span class="theme-title">Rios do Mundo</span>
         </div>
-        <!-- More theme cards... -->
+
+        <div class="theme-card" onclick="selectTheme('Biomas')">
+          <img
+            src="static/images/icones/relevos.png"
+            alt="Biomas"
+            class="theme-image" />
+          <span class="theme-title">Biomas Brasileiros</span>
+        </div>
       </div>
+
       <img
         src="static/images/icones/logo_educacao.png"
         alt="Logo"
@@ -130,6 +168,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+
           <div class="modal-body">
             <form id="playerNameForm">
               <div class="form-group">
@@ -198,25 +237,26 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class="table-wrapper" id="scores-container">
-              <!-- Tables for each theme will be generated here -->
-            </div>
+            <div id="scores-loading">Loading…</div>
+            <div class="table-wrapper" id="scores-container"></div>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- ✅ Bootstrap 4 + Popper v1 (CORRETO) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <script>
-      // Hint messages for each theme
       const hints = {
         Elementos: "Dica: Lembre-se dos símbolos químicos!",
         Estados: "Dica: Pense nas capitais dos Estados!",
         Países: "Dica: Memorize os Países e suas capitais!",
-        Relevos: "Dica: Veja os relevos e suas características!",
+        "Digital Devices": "Dica: Combine os dispositivos e seus nomes!",
         Rios: "Dica: Lembre-se dos rios famosos!",
+        Biomas: "Dica: Associe cada animal ao seu bioma brasileiro!",
       };
 
       function selectTheme(theme) {
@@ -228,13 +268,15 @@
         .getElementById("playerNameForm")
         .addEventListener("submit", function (event) {
           event.preventDefault();
-          const playerName = document.getElementById("playerNameInput").value;
+          const playerName = document
+            .getElementById("playerNameInput")
+            .value.trim();
           const theme = sessionStorage.getItem("theme");
+
           sessionStorage.setItem("playerName", playerName);
 
-          // Set the hint text based on the selected theme
-          document.getElementById("hintText").innerText = hints[theme];
-
+          document.getElementById("hintText").innerText =
+            hints[theme] || "Dica: Boa sorte!";
           $("#playerNameModal").modal("hide");
           $("#hintModal").modal("show");
         });
@@ -251,19 +293,40 @@
         fetchScores();
       }
 
-      function fetchScores() {
-        const themes = ["Elementos", "Estados", "Países", "Relevos", "Rios"];
+      async function fetchScores() {
+        const themes = [
+          "Elementos",
+          "Estados",
+          "Países",
+          "Digital Devices",
+          "Rios",
+          "Biomas",
+        ];
         const scoresContainer = document.getElementById("scores-container");
-        scoresContainer.innerHTML = ""; // Clear previous scores
+        const loading = document.getElementById("scores-loading");
 
-        themes.forEach((theme) => {
-          fetch(`/get_rankings?theme=${theme}`)
-            .then((response) => response.json())
-            .then((data) => {
-              const tableContainer = document.createElement("div");
-              tableContainer.classList.add("table-container");
+        scoresContainer.innerHTML = "";
+        loading.style.display = "block";
 
-              let tableHTML = `
+        try {
+          const results = await Promise.all(
+            themes.map(async (theme) => {
+              const res = await fetch(
+                `/get_rankings?theme=${encodeURIComponent(theme)}`,
+              );
+              const data = await res.json();
+              return { theme, data };
+            }),
+          );
+
+          results.forEach(({ theme, data }) => {
+            const tableContainer = document.createElement("div");
+            tableContainer.classList.add("table-container");
+
+            // Se backend retornou erro:
+            const rowsData = Array.isArray(data) ? data : [];
+
+            let tableHTML = `
               <h2>${theme}</h2>
               <table class="table table-striped table-bordered">
                 <thead>
@@ -275,33 +338,35 @@
                 </thead>
                 <tbody>`;
 
-              for (let i = 0; i < 10; i++) {
-                if (i < data.length) {
-                  const score = data[i];
-                  tableHTML += `
-                    <tr>
-                      <td>${i + 1}</td>
-                      <td>${score[0]}</td>
-                      <td>${score[1]}</td>
-                    </tr>`;
-                } else {
-                  tableHTML += `
-                    <tr>
-                      <td>${i + 1}</td>
-                      <td>-</td>
-                      <td>-</td>
-                    </tr>`;
-                }
+            for (let i = 0; i < 10; i++) {
+              if (i < rowsData.length) {
+                const score = rowsData[i];
+                tableHTML += `
+                  <tr>
+                    <td>${i + 1}</td>
+                    <td>${score.name ?? "-"}</td>
+                    <td>${score.time ?? "-"}</td>
+                  </tr>`;
+              } else {
+                tableHTML += `
+                  <tr>
+                    <td>${i + 1}</td>
+                    <td>-</td>
+                    <td>-</td>
+                  </tr>`;
               }
+            }
 
-              tableHTML += `</tbody></table>`;
-              tableContainer.innerHTML = tableHTML;
-              scoresContainer.appendChild(tableContainer);
-            })
-            .catch((error) => {
-              console.error("Error fetching scores:", error);
-            });
-        });
+            tableHTML += `</tbody></table>`;
+            tableContainer.innerHTML = tableHTML;
+            scoresContainer.appendChild(tableContainer);
+          });
+        } catch (e) {
+          console.error("Error fetching scores:", e);
+          scoresContainer.innerHTML = `<div class="w-100 text-center">Erro ao carregar scores.</div>`;
+        } finally {
+          loading.style.display = "none";
+        }
       }
     </script>
   </body>

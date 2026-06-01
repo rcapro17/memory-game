@@ -4,16 +4,19 @@ import os
 
 app = Flask(__name__)
 
-DB_PATH = "database.db"
+# On Render (or any host) set the DB_PATH env-var to a writable path,
+# e.g. /tmp/database.db (ephemeral) or /data/database.db (persistent disk).
+DB_PATH = os.environ.get("DB_PATH", "database.db")
 
-# Temas oficiais do jogo
+# Temas oficiais do jogo (ALINHADOS com o frontend)
 ALLOWED_THEMES = [
     "Elementos",
     "Estados",
+    "Países",
     "Icones",
-    "Relevos",
     "Rios",
     "Digital Devices",
+    "Biomas",
 ]
 
 def normalize_theme(theme: str) -> str:
@@ -26,15 +29,20 @@ def normalize_theme(theme: str) -> str:
     aliases = {
         "Ícones": "Icones",
         "Icones do Brasil": "Icones",
+
+        # Relevos / Relevo agora viram Digital Devices
+        "Relevo": "Digital Devices",
+        "Relevos": "Digital Devices",
+        "Relevos do Mundo": "Digital Devices",
+
+        # Dispositivos Digitais
         "Dispositivos Digitais": "Digital Devices",
         "DigitalDevices": "Digital Devices",
         "Devices": "Digital Devices",
     }
 
-    theme = aliases.get(theme, theme)
-    return theme
+    return aliases.get(theme, theme)
 
-# --- CRIAÇÃO DO BANCO DE DADOS ---
 def init_db():
     """Cria a tabela e índices se eles não existirem."""
     try:
@@ -56,8 +64,7 @@ def init_db():
     except Exception as e:
         print(f" Erro ao inicializar banco de dados: {e}")
 
-# [IMPORTANTE] Chamamos a função aqui para garantir que rode no Gunicorn
-init_db() 
+init_db()
 
 @app.route("/")
 def index():
@@ -134,7 +141,6 @@ def get_rankings():
     try:
         conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
-        # Limitei a 10 para pegar o Top 10
         c.execute(
             "SELECT name, time FROM rankings WHERE theme = ? ORDER BY time ASC LIMIT 10",
             (theme,),
@@ -142,10 +148,10 @@ def get_rankings():
         rankings = c.fetchall()
         conn.close()
 
+        # Retorna objetos (o frontend vai ler .name e .time)
         return jsonify([{"name": r[0], "time": r[1]} for r in rankings])
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    # Mantemos aqui para desenvolvimento local (flask run ou python app.py)
     app.run(debug=True)

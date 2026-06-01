@@ -12,9 +12,19 @@ const hints = {
   Elementos: 'Dica: Lembre-se dos símbolos químicos!',
   Estados: 'Dica: Pense nas capitais dos Estados!',
   Países: 'Dica: Memorize os Países e suas capitais!',
-  Relevos: 'Dica: Veja os relevos e suas características!',
+  'Digital Devices': 'Dica: Combine os dispositivos e seus nomes!',
   Rios: 'Dica: Lembre-se dos rios famosos!',
-  // Add more themes and hints here
+  Biomas: 'Dica: Associe cada animal ao seu bioma brasileiro!',
+};
+
+// Maps theme names to their image folder names when they differ
+const themeFolderMap = {
+  'Digital Devices': 'Digital',
+};
+
+// Number of pairs per theme (defaults to 8 for all other themes)
+const themePairsMap = {
+  Biomas: 5,
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -42,10 +52,12 @@ function backToTheme() {
 }
 
 function generateCards(theme) {
+  const folder = themeFolderMap[theme] || theme;
+  const totalPairs = themePairsMap[theme] || 8;
   const cardImages = [];
-  for (let i = 1; i <= 8; i++) {
-    cardImages.push({ img: `${theme}/${i}_flag.png`, pair: `${i}_flag` });
-    cardImages.push({ img: `${theme}/${i}_name.png`, pair: `${i}_name` });
+  for (let i = 1; i <= totalPairs; i++) {
+    cardImages.push({ img: `${folder}/${i}_flag.png`, pair: `${i}_flag` });
+    cardImages.push({ img: `${folder}/${i}_name.png`, pair: `${i}_name` });
   }
   return cardImages.sort(() => Math.random() - 0.5);
 }
@@ -78,7 +90,8 @@ function checkMatch() {
   const [index1, index2] = revealed;
   if (cards[index1].pair.split('_')[0] === cards[index2].pair.split('_')[0]) {
     matchedPairs++;
-    if (matchedPairs === 8) {
+    const totalPairs = themePairsMap[selectedTheme] || 8;
+    if (matchedPairs === totalPairs) {
       endGame(true);
     }
   } else {

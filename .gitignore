@@ -1,6 +1,7 @@
 # Ignore database directories (if any)
 db/
 database/
+database.db
 
 # Node.js dependencies
 node_modules/
