@@ -24,7 +24,7 @@ const themeFolderMap = {
 
 // Number of pairs per theme (defaults to 8 for all other themes)
 const themePairsMap = {
-  Biomas: 5,
+  Biomas: 6,
 };
 
 document.addEventListener('DOMContentLoaded', () => {
