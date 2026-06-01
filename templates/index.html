@@ -136,6 +136,7 @@
                   type="text"
                   class="form-control"
                   id="playerNameInput"
+                  maxlength="20"
                   required />
               </div>
               <button type="submit" class="btn btn-primary">Start Game</button>
@@ -285,7 +286,7 @@
                 </thead>
                 <tbody>`;
 
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 25; i++) {
               if (i < rowsData.length) {
                 const score = rowsData[i];
                 tableHTML += `

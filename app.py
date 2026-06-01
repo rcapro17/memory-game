@@ -86,6 +86,9 @@ def start_game():
     if not player_name:
         return jsonify({"error": "player_name is required"}), 400
 
+    if len(player_name) > 20:
+        return jsonify({"error": "player_name must be 20 characters or fewer"}), 400
+
     if theme not in ALLOWED_THEMES:
         return jsonify({"error": "Invalid theme", "allowed": ALLOWED_THEMES}), 400
 
@@ -102,15 +105,18 @@ def save_score():
     if not name:
         return jsonify({"error": "playerName is required"}), 400
 
+    if len(name) > 20:
+        return jsonify({"error": "playerName must be 20 characters or fewer"}), 400
+
     if theme not in ALLOWED_THEMES:
         return jsonify({"error": "Invalid theme", "allowed": ALLOWED_THEMES}), 400
 
     try:
         elapsed_time = int(elapsed_time)
-        if elapsed_time < 0:
+        if elapsed_time <= 0:
             raise ValueError()
     except Exception:
-        return jsonify({"error": "score must be a non-negative integer (seconds)"}), 400
+        return jsonify({"error": "score must be a positive integer (seconds)"}), 400
 
     try:
         conn = sqlite3.connect(DB_PATH)
@@ -136,7 +142,7 @@ def get_rankings():
         conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
         c.execute(
-            "SELECT name, time FROM rankings WHERE theme = ? ORDER BY time ASC LIMIT 10",
+            "SELECT name, time FROM rankings WHERE theme = ? ORDER BY time ASC LIMIT 25",
             (theme,),
         )
         rankings = c.fetchall()

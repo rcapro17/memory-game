@@ -34,7 +34,7 @@ const cardLabels = {
   Biomas: {
     '1_flag': 'Pampas e Campos',  '1_name': 'Pampas e Campos',
     '2_flag': 'Mata Atlântica',   '2_name': 'Mata Atlântica',
-    '3_flag': 'Caatinga',         '3_name': 'Caatinga',
+    '3_flag': 'Pantanal',         '3_name': 'Pantanal',
     '4_flag': 'Amazônia',         '4_name': 'Amazônia',
     '5_flag': 'Cerrado',          '5_name': 'Cerrado',
     '6_flag': 'Caatinga',         '6_name': 'Caatinga',
@@ -150,9 +150,8 @@ function checkMatch() {
   const c1 = cards[i1];
   const c2 = cards[i2];
 
-  const isMatch = (c1.label && c2.label)
-    ? c1.label === c2.label && c1.type !== c2.type
-    : c1.pair.split('_')[0] === c2.pair.split('_')[0];
+  // Strict number-based matching: 1_flag only matches 1_name, etc.
+  const isMatch = c1.pair.split('_')[0] === c2.pair.split('_')[0];
 
   if (isMatch) {
     c1.matched = true; c1.revealed = false;
