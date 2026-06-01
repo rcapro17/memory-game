@@ -9,11 +9,6 @@ const gameDuration = 100; // Game duration in seconds
 
 // Dictionary of hints based on the theme
 const hints = {
-  Elementos: 'Dica: Lembre-se dos símbolos químicos!',
-  Estados: 'Dica: Pense nas capitais dos Estados!',
-  Países: 'Dica: Memorize os Países e suas capitais!',
-  'Digital Devices': 'Dica: Combine os dispositivos e seus nomes!',
-  Rios: 'Dica: Lembre-se dos rios famosos!',
   Biomas: 'Dica: Associe cada animal ao seu bioma brasileiro!',
 };
 

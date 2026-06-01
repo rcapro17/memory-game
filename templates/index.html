@@ -91,47 +91,6 @@
       <h1>Selecione Tema:</h1>
 
       <div class="container" id="nivel-4">
-        <div class="theme-card" onclick="selectTheme('Elementos')">
-          <img
-            src="static/images/icones/elementos.png"
-            alt="Elementos"
-            class="theme-image" />
-          <span class="theme-title">Elementos Químicos</span>
-        </div>
-
-        <div class="theme-card" onclick="selectTheme('Estados')">
-          <img
-            src="static/images/icones/estados.png"
-            alt="Estados"
-            class="theme-image" />
-          <span class="theme-title">Estados do Brasil</span>
-        </div>
-
-        <div class="theme-card" onclick="selectTheme('Países')">
-          <img
-            src="static/images/icones/paises.png"
-            alt="Países"
-            class="theme-image" />
-          <span class="theme-title">Países do Mundo</span>
-        </div>
-
-        <!-- TROCA AQUI: Relevos -> Digital Devices -->
-        <div class="theme-card" onclick="selectTheme('Digital Devices')">
-          <img
-            src="static/images/icones/digital.png"
-            alt="Digital Devices"
-            class="theme-image" />
-          <span class="theme-title">Digital Devices</span>
-        </div>
-
-        <div class="theme-card" onclick="selectTheme('Rios')">
-          <img
-            src="static/images/icones/relevos.png"
-            alt="Rios"
-            class="theme-image" />
-          <span class="theme-title">Rios do Mundo</span>
-        </div>
-
         <div class="theme-card" onclick="selectTheme('Biomas')">
           <img
             src="static/images/icones/relevos.png"
@@ -251,11 +210,6 @@
 
     <script>
       const hints = {
-        Elementos: "Dica: Lembre-se dos símbolos químicos!",
-        Estados: "Dica: Pense nas capitais dos Estados!",
-        Países: "Dica: Memorize os Países e suas capitais!",
-        "Digital Devices": "Dica: Combine os dispositivos e seus nomes!",
-        Rios: "Dica: Lembre-se dos rios famosos!",
         Biomas: "Dica: Associe cada animal ao seu bioma brasileiro!",
       };
 
@@ -294,14 +248,7 @@
       }
 
       async function fetchScores() {
-        const themes = [
-          "Elementos",
-          "Estados",
-          "Países",
-          "Digital Devices",
-          "Rios",
-          "Biomas",
-        ];
+        const themes = ["Biomas"];
         const scoresContainer = document.getElementById("scores-container");
         const loading = document.getElementById("scores-loading");
 

@@ -10,12 +10,6 @@ DB_PATH = os.environ.get("DB_PATH", "database.db")
 
 # Temas oficiais do jogo (ALINHADOS com o frontend)
 ALLOWED_THEMES = [
-    "Elementos",
-    "Estados",
-    "Países",
-    "Icones",
-    "Rios",
-    "Digital Devices",
     "Biomas",
 ]
 
