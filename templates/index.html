@@ -17,54 +17,126 @@
       rel="stylesheet" />
 
     <style>
-      /* Modal responsivo (iPad Pro 12" e geral) */
-      .modal-dialog {
-        max-width: 760px;
-        width: 92vw;
-        margin: 1.25rem auto;
+      /* ── Score modal ─────────────────────────── */
+      #scoreModal .modal-dialog {
+        max-width: 480px;
+        width: 94vw;
+        margin: 1rem auto;
       }
-      @media (min-width: 1024px) {
-        .modal-dialog {
-          max-width: 900px;
-        }
+      #scoreModal .modal-content {
+        border-radius: 12px;
+        overflow: hidden;
+        padding: 0;
+      }
+      #scoreModal .modal-header {
+        background: #1a5c2a;
+        color: #fff;
+        padding: 14px 20px;
+        border-bottom: none;
+        align-items: center;
+      }
+      #scoreModal .modal-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        flex: 1;
+      }
+      #scoreModal .close { color: #fff; opacity: 0.8; }
+      #scoreModal .close:hover { opacity: 1; }
+
+      /* Countdown badge */
+      #refresh-countdown {
+        font-size: 0.72rem;
+        background: rgba(255,255,255,0.18);
+        color: #fff;
+        padding: 2px 9px;
+        border-radius: 20px;
+        margin-right: 10px;
+        white-space: nowrap;
+        font-weight: 600;
       }
 
-      .modal-content {
-        padding: 1rem;
-        border-radius: 0.5rem;
-      }
-      .modal-backdrop.show {
-        opacity: 0.9;
-        background-color: black;
-      }
-
-      .table-wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-      }
-      .table-container {
-        flex: 0 0 48%;
-        margin-bottom: 1rem;
+      /* Body */
+      #scoreModal .modal-body {
+        padding: 0;
         max-height: 70vh;
         overflow-y: auto;
       }
-      @media (max-width: 768px) {
-        .table-container {
-          flex: 0 0 100%;
-        }
-      }
 
-      .modal-title {
-        text-align: center;
-        width: 100%;
-      }
-
-      /* feedback rápido ao abrir scores */
+      /* Loading spinner row */
       #scores-loading {
         display: none;
         text-align: center;
-        padding: 0.75rem 0;
+        padding: 20px;
+        color: #888;
+        font-size: 0.9rem;
+      }
+
+      /* Score table */
+      .score-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+      .score-table thead th {
+        background: #f1f8f3;
+        color: #1a5c2a;
+        font-weight: 700;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 8px 14px;
+        border-bottom: 2px solid #c8e6c9;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+      .score-table tbody tr {
+        border-bottom: 1px solid #f0f0f0;
+        transition: background 0.15s;
+      }
+      .score-table tbody tr:hover { background: #f6fdf7; }
+      .score-table tbody tr:nth-child(odd) { background: #fafafa; }
+      .score-table tbody tr:nth-child(odd):hover { background: #f0faf2; }
+      .score-table td {
+        padding: 9px 14px;
+        vertical-align: middle;
+      }
+      .td-pos {
+        width: 46px;
+        font-weight: 700;
+        color: #888;
+        font-size: 0.85rem;
+        text-align: center;
+      }
+      .td-pos.gold   { font-size: 1.15rem; color: #e6ac00; }
+      .td-pos.silver { font-size: 1.15rem; color: #9e9e9e; }
+      .td-pos.bronze { font-size: 1.15rem; color: #b5651d; }
+      .td-name { font-weight: 500; color: #333; }
+      .td-time {
+        text-align: right;
+        font-weight: 700;
+        color: #1a5c2a;
+        white-space: nowrap;
+      }
+
+      /* Empty state */
+      .scores-empty {
+        text-align: center;
+        padding: 32px 20px;
+        color: #aaa;
+        font-size: 0.95rem;
+      }
+      .scores-empty .scores-empty-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+
+      /* Other modals */
+      .modal-dialog { width: 94vw; margin: 1rem auto; }
+      .modal-content { padding: 1rem; border-radius: 0.5rem; }
+      .modal-backdrop.show { opacity: 0.85; background-color: #000; }
+
+      @media (max-width: 480px) {
+        #scoreModal .modal-dialog { max-width: 100%; width: 100%; margin: 0; }
+        #scoreModal .modal-content { border-radius: 0; min-height: 100vh; }
+        #scoreModal .modal-body { max-height: calc(100vh - 60px); }
       }
     </style>
   </head>
@@ -187,7 +259,8 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="scoreModalLabel">Scores</h5>
+            <h5 class="modal-title" id="scoreModalLabel">🏆 Ranking — Biomas Brasileiros</h5>
+            <span id="refresh-countdown">🔄 15s</span>
             <button
               type="button"
               class="close"
@@ -197,8 +270,8 @@
             </button>
           </div>
           <div class="modal-body">
-            <div id="scores-loading">Loading…</div>
-            <div class="table-wrapper" id="scores-container"></div>
+            <div id="scores-loading">Carregando…</div>
+            <div id="scores-container"></div>
           </div>
         </div>
       </div>
@@ -214,104 +287,133 @@
         Biomas: "Dica: Associe cada animal ao seu bioma brasileiro!",
       };
 
+      // ── Theme selection ───────────────────────────────────
       function selectTheme(theme) {
         sessionStorage.setItem("theme", theme);
         $("#playerNameModal").modal("show");
       }
 
-      document
-        .getElementById("playerNameForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-          const playerName = document
-            .getElementById("playerNameInput")
-            .value.trim();
-          const theme = sessionStorage.getItem("theme");
+      document.getElementById("playerNameForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const playerName = document.getElementById("playerNameInput").value.trim();
+        const theme = sessionStorage.getItem("theme");
+        sessionStorage.setItem("playerName", playerName);
+        document.getElementById("hintText").innerText = hints[theme] || "Dica: Boa sorte!";
+        $("#playerNameModal").modal("hide");
+        $("#hintModal").modal("show");
+      });
 
-          sessionStorage.setItem("playerName", playerName);
+      document.getElementById("startGameButton").addEventListener("click", function () {
+        $("#hintModal").modal("hide");
+        window.location.href = "/game";
+      });
 
-          document.getElementById("hintText").innerText =
-            hints[theme] || "Dica: Boa sorte!";
-          $("#playerNameModal").modal("hide");
-          $("#hintModal").modal("show");
-        });
-
-      document
-        .getElementById("startGameButton")
-        .addEventListener("click", function () {
-          $("#hintModal").modal("hide");
-          window.location.href = "/game";
-        });
+      // ── Scoreboard ────────────────────────────────────────
+      let _refreshInterval  = null;
+      let _countdownInterval = null;
+      let _countdown = 15;
 
       function showScoresModal() {
         $("#scoreModal").modal("show");
         fetchScores();
+        _startRefresh();
       }
 
-      async function fetchScores() {
-        const themes = ["Biomas"];
-        const scoresContainer = document.getElementById("scores-container");
-        const loading = document.getElementById("scores-loading");
+      // Stop timers when modal closes
+      $("#scoreModal").on("hidden.bs.modal", _stopRefresh);
 
-        scoresContainer.innerHTML = "";
-        loading.style.display = "block";
+      function _startRefresh() {
+        _stopRefresh();
+        _countdown = 15;
+        _updateCountdown();
+
+        _countdownInterval = setInterval(() => {
+          _countdown--;
+          _updateCountdown();
+        }, 1000);
+
+        _refreshInterval = setInterval(() => {
+          fetchScores(true);   // silent = no spinner
+          _countdown = 15;
+        }, 15000);
+      }
+
+      function _stopRefresh() {
+        clearInterval(_refreshInterval);
+        clearInterval(_countdownInterval);
+        _refreshInterval = _countdownInterval = null;
+      }
+
+      function _updateCountdown() {
+        const el = document.getElementById("refresh-countdown");
+        if (el) el.textContent = `🔄 ${_countdown}s`;
+      }
+
+      // Medals for top 3
+      function _posLabel(i) {
+        return ["🥇", "🥈", "🥉"][i] ?? (i + 1);
+      }
+      function _posClass(i) {
+        return ["gold", "silver", "bronze"][i] ?? "";
+      }
+
+      async function fetchScores(silent = false) {
+        const container = document.getElementById("scores-container");
+        const loading   = document.getElementById("scores-loading");
+
+        if (!silent) {
+          container.innerHTML = "";
+          loading.style.display = "block";
+        }
 
         try {
-          const results = await Promise.all(
-            themes.map(async (theme) => {
-              const res = await fetch(
-                `/get_rankings?theme=${encodeURIComponent(theme)}`,
-              );
-              const data = await res.json();
-              return { theme, data };
-            }),
-          );
+          const res  = await fetch(`/get_rankings?theme=Biomas`);
+          const data = await res.json();
+          const rows = Array.isArray(data) ? data.slice(0, 25) : [];
 
-          results.forEach(({ theme, data }) => {
-            const tableContainer = document.createElement("div");
-            tableContainer.classList.add("table-container");
+          let html = `<table class="score-table">
+            <thead>
+              <tr>
+                <th class="td-pos">#</th>
+                <th class="td-name">Jogador</th>
+                <th class="td-time">Tempo</th>
+              </tr>
+            </thead>
+            <tbody>`;
 
-            // Se backend retornou erro:
-            const rowsData = Array.isArray(data) ? data : [];
+          if (rows.length === 0) {
+            html += `</tbody></table>
+              <div class="scores-empty">
+                <span class="scores-empty-icon">🌿</span>
+                Nenhuma pontuação ainda.<br>Seja o primeiro a jogar!
+              </div>`;
+          } else {
+            rows.forEach((score, i) => {
+              html += `<tr>
+                <td class="td-pos ${_posClass(i)}">${_posLabel(i)}</td>
+                <td class="td-name">${score.name ?? "-"}</td>
+                <td class="td-time">${score.time ?? "-"}s</td>
+              </tr>`;
+            });
+            html += `</tbody></table>`;
+          }
 
-            let tableHTML = `
-              <h2>${theme}</h2>
-              <table class="table table-striped table-bordered">
-                <thead>
-                  <tr>
-                    <th>Posição</th>
-                    <th>Jogador</th>
-                    <th>Tempo</th>
-                  </tr>
-                </thead>
-                <tbody>`;
-
-            for (let i = 0; i < 25; i++) {
-              if (i < rowsData.length) {
-                const score = rowsData[i];
-                tableHTML += `
-                  <tr>
-                    <td>${i + 1}</td>
-                    <td>${score.name ?? "-"}</td>
-                    <td>${score.time ?? "-"}</td>
-                  </tr>`;
-              } else {
-                tableHTML += `
-                  <tr>
-                    <td>${i + 1}</td>
-                    <td>-</td>
-                    <td>-</td>
-                  </tr>`;
-              }
-            }
-
-            tableHTML += `</tbody></table>`;
-            tableContainer.innerHTML = tableHTML;
-            scoresContainer.appendChild(tableContainer);
-          });
-        } catch (e) {
-          console.error("Error fetching scores:", e);
-          scoresContainer.innerHTML = `<div class="w-100 text-center">Erro ao carregar scores.</div>`;
+          // Swap content without resetting scroll
+          if (silent) {
+            const scrollTop = container.scrollTop;
+            container.innerHTML = html;
+            container.scrollTop = scrollTop;
+          } else {
+            container.innerHTML = html;
+          }
+        } catch (err) {
+          console.error("fetchScores error:", err);
+          if (!silent) {
+            container.innerHTML = `<div class="scores-empty">
+              <span class="scores-empty-icon">⚠️</span>
+              Erro ao carregar scores.
+            </div>`;
+          }
         } finally {
           loading.style.display = "none";
         }
